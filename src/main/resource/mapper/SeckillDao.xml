@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<!-- 目的：为Dao接口党阀提供SQL语句配置 -->
+<!-- 目的：为Dao接口提供SQL语句配置 -->
 <mapper namespace="dao.SeckillDao">
 	<!-- parameterType是可选的，因为 MyBatis 可以通过 TypeHandler 推断出具体传入语句的参数，默认值为 unset。 -->
 	<update id="reduceNumber">
@@ -26,5 +26,15 @@
 		from seckill
 		order by create_time desc
 		limit #{offset},#{limit}
+	</select>
+	
+	<!-- mybatis调用存储过程 -->
+	<select id="killByProcedure" statementType="CALLABLE">
+		call execute_seckill(
+			#{seckillId, jdbcType=BIGINT, mode=IN},
+			#{phone, jdbcType=BIGINT, mode=IN},
+			#{killTime, jdbcType=TIMESTAMP, mode=IN},
+			#{result, jdbcType=INTEGER, mode=OUT}
+		)
 	</select>
 </mapper>

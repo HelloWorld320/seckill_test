@@ -5,13 +5,14 @@ create database seckill;
 use seckill;
 
 -- 创建秒杀库存表
+-- MySql5.5版本中：如果有两个timestamp字段，但是只把第一个设定为current_timestamp而第二个没有设定默认值，mysql也能成功建表,但是反过来就不行...
 create table seckill (
 	seckill_id bigint not null auto_increment comment '商品库存id',
 	name varchar(120) not null comment '商品名称',
 	number int not null comment '库存数量',
+	create_time timestamp not null default current_timestamp comment '创建时间',
 	start_time timestamp not null comment '秒杀开启时间',
 	end_time timestamp not null comment '秒杀结束时间',
-	create_time timestamp not null default current_timestamp comment '创建时间',
 	primary key (seckill_id),
 	key idx_start_time (start_time),
 	key idx_end_time (end_time),
@@ -22,10 +23,10 @@ create table seckill (
 insert into
 	seckill(name, number, start_time, end_time)
 values
-	('1000元秒杀iPhone8', 100, '2018-11-21 00:00:00', '2018-11-21 00:00:00'),
-	('500元秒杀ipad3', 200, '2018-11-21 00:00:00', '2018-11-21 00:00:00'),
-	('300元秒杀小米5', 300, '2018-11-21 00:00:00', '2018-11-21 00:00:00'),
-	('100元秒杀红米4', 400, '2018-11-21 00:00:00', '2018-11-21 00:00:00');
+	('1000元秒杀iPhone8', 100, '2018-11-21 00:00:00', '2018-11-22 00:00:00'),
+	('500元秒杀ipad3', 200, '2018-11-21 00:00:00', '2018-11-22 00:00:00'),
+	('300元秒杀小米5', 300, '2018-11-21 00:00:00', '2018-11-22 00:00:00'),
+	('100元秒杀红米4', 400, '2018-11-21 00:00:00', '2018-11-22 00:00:00');
 	
 -- 秒杀成功明细表
 -- 用户登录认证相关信息
